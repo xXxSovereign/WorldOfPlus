@@ -11,6 +11,3 @@ def load():
 
     return retval
 
-
-print(load()[0])
-print(load()[1])
