@@ -24,7 +24,8 @@ def gen_Map(size):
         mapSize = 15  # Middle: [7][7]
         center = [7, 7]
 
-    mapv1 = [["+" for _ in range(mapSize)] for _ in range(mapSize)]  # Creating the map as a list, _ means that no var is
+    mapv1 = [["+" for _ in range(mapSize)] for _ in range(mapSize)]
+    # Creating the map as a list, _ means that no var is needed
 
     mapv2 = mapv1.copy()
     dungeon_count = 0
