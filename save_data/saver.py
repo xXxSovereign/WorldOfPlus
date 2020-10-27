@@ -10,4 +10,4 @@ def save(save_data, save_data2):
         f.write(json.dumps(save_data2))
 
 
-save([1,3,4,5,6], [["1",'1','45'], ['3','+','+']])
+
