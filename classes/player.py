@@ -1,3 +1,8 @@
 class Player:
-    def __init__(self):
-        pass
+    startHealh = 10
+
+
+
+
+
+
