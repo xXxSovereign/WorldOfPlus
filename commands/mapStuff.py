@@ -1,5 +1,5 @@
 import os
-
+import random as r
 
 def display_Map(world_map):  # Function to display the world map, parameter is the current explored map
     os.system("cls")  # Clears previous text in the Terminal
@@ -20,4 +20,9 @@ def gen_Map(size):
     elif size == 3:
         mapSize = 15  # Middle: [7][7]
 
-    [["+" for i in range(mapSize)] for j in range(mapSize)]  # Creating the map as a list
+    map = [["+" for i in range(mapSize)] for j in range(mapSize)]  # Creating the map as a list
+    map[center[0]][center[1]] = "H"
+    return map
+
+
+
