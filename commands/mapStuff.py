@@ -37,4 +37,4 @@ def gen_Map(size):
     return [mapv1, mapv2]
 
 
-display_Map(gen_Map(1)[0])
+
