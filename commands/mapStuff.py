@@ -1,26 +1,44 @@
 import os
 import random as r
 
+# global variables used in functions, they must be up here to be accessable throught this program
 dungeon_count = 0
 switch = {
-        1: "D",
-        2: "F",
-        3: "M",
-        4: "T"
-    }
+    1: u"\U0001D403",  # UTF-8 Encoding for 𝐃
+    2: "F",
+    3: "M",
+    4: "T"
+}
 
 
-def area_switch(case):
-    return switch[case]
+def Shuffle(map):
+    find_Index = lambda arr: [[i, j] for i, x in enumerate(arr) for j, y in enumerate(x)]
+    indexes = find_Index(map)
+    retval = map.copy()
+
+    for row in map:
+        for item in row:
+            x = r.choice(indexes)
+            indexes.pop(indexes.index(x))
+            retval[x[0]][x[1]] = item
+            print(retval)
+
+    # Deletes the list to free up memory as it is no longer needed
+    del indexes
+    return retval  # return the shuffled map, retval is my lazy way of saying return value
+
+
+def area_Switch(case):
+    return switch[case]  # this function is used this way to get around a problem with scope and other problems
 
 
 def determine_Area():
     global dungeon_count, switch
 
-    area = area_switch(r.randint(1, 4))
-    if area == "D" and dungeon_count != 4:
+    area = area_Switch(r.randint(1, 4))
+    if area == u"\U0001D403" and dungeon_count != 4:
         dungeon_count += 1
-    elif area == "D" and dungeon_count == 4:
+    elif area == u"\U0001D403" and dungeon_count == 4:
         area = None
         switch[1] = "F"
     return area
@@ -36,9 +54,12 @@ def display_Map(world_map):  # Function to display the world map, parameter is t
 
 
 def gen_Map(size):
-    # Determine map size off of user input "size"
+    # Determine map size off of user input "size" and center of the map
 
-    if size == 1:
+    if size == 0:
+        mapSize = 3
+        center = [1, 1]
+    elif size == 1:
         mapSize = 7
         center = [3, 3]  # Middle of square will be: [3][3]
     elif size == 2:
@@ -52,17 +73,37 @@ def gen_Map(size):
     # Creating the map as a list, _ means that no var is needed
 
     mapv2 = mapv1.copy()
-    mapv1[center[0]][center[1]] = "H"
+    mapv1[center[0]][center[1]] = "H"  # sets the center of mapv1 to H
 
-    for index, i in enumerate(mapv1):
-        for index2, j in enumerate(i):
-            area = determine_Area()
+    # This loops through all the +'s in mapv1, and copies the position using enumerate, to the map the Area's onto mapv2
+    for index, i in enumerate(mapv1):  # Access each list in mapv1
+        for index2, j in enumerate(i):  # access each item in each list in mapv1
+            area = determine_Area()  # generate a radnom area
             if area is None:
-                area = determine_Area()
-                mapv2[index][index2] = area
+                area = determine_Area()  # This whole block is used in conjunction with determine_Area() to block >4 D's
+            mapv2[index][index2] = area  # sets the index in mapv2 to the area
 
     mapv2[center[0]][center[1]] = "H"
-    return [mapv1, mapv2]
+
+    mapv1 = [["+" for _ in range(mapSize)] for _ in range(mapSize)]
+    mapv1[center[0]][center[1]] = "H"
+
+    # Shuffling mapv2 to fix Dungeons only appearing near the top
+    mapv3 = Shuffle(mapv2)
+
+    # Making the entire map's center H
+
+    while True:
+        while mapv3[center[0]][center[1]] == u"\U0001D403":
+            mapv3 = Shuffle(mapv2)
+        mapv3[center[0]][center[1]] = "H"
+
+        for row in mapv3:
+            for item in row:
+                if False:
+                    None
+
+    return [mapv1, mapv3]
 
 
-display_Map(gen_Map(2)[0])
+display_Map(gen_Map(0)[1])
