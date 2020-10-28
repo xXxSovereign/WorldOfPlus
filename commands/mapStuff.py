@@ -1,5 +1,6 @@
 import os
 import random as r
+import numpy as np
 
 # global variables used in functions, they must be up here to be accessable throught this program
 dungeon_count = 0
@@ -12,20 +13,7 @@ switch = {
 
 
 def Shuffle(map):
-    find_Index = lambda arr: [[i, j] for i, x in enumerate(arr) for j, y in enumerate(x)]
-    indexes = find_Index(map)
-    retval = map.copy()
-
-    for row in map:
-        for item in row:
-            x = r.choice(indexes)
-            indexes.pop(indexes.index(x))
-            retval[x[0]][x[1]] = item
-            print(retval)
-
-    # Deletes the list to free up memory as it is no longer needed
-    del indexes
-    return retval  # return the shuffled map, retval is my lazy way of saying return value
+    np.
 
 
 def area_Switch(case):
