@@ -13,7 +13,7 @@ switch = {
 
 
 def Shuffle(map):
-    np.
+    return ["placeholder", "value"]
 
 
 def area_Switch(case):
@@ -89,7 +89,7 @@ def gen_Map(size):
         for row in mapv3:
             for item in row:
                 if False:
-                    None
+                    pass
 
     return [mapv1, mapv3]
 
