@@ -3,7 +3,8 @@ import random as r
 
 
 def display_Map(world_map):  # Function to display the world map, parameter is the current explored map
-    # os.system("cls")  # Clears previous text in the Terminal
+    os.system("cls")  # Clears previous text in the Terminal
+    os.system("chcp 65001")  # sets current code page to UTF-8 to display chars
     for i in world_map:
         output = ""  # For loop to access and print individual items in the map list
         for j in i:
@@ -36,7 +37,7 @@ def gen_Map(size):
     # Creating the map as a list, _ means that no var is needed
     mapv1[center[0]][center[1]] = "H"  # sets the center of mapv1 to H
 
-    areas = ["F", "M", "T"]  # list of the area's, excluding dungeon and final dungeon
+    areas = ["F", "M", "T", "S", "C"]  # list of the area's, excluding dungeon and final dungeon
 
     mapv2 = []  # initializing the list for the fully discovered map
 
@@ -45,9 +46,9 @@ def gen_Map(size):
             mapv2.append(r.choice(areas))  # making random areas
 
     for _ in range(4):
-        mapv2[r.randint(0, len(mapv2) - 1)] = u"\U0001D403"  # setting the 4 dungeons at random points on map
+        mapv2[r.randint(0, len(mapv2) - 1)] = u"\u0468"  # Ѩ , setting the 4 dungeons at random points on map
 
-    mapv2[r.randint(0, len(mapv2) - 1)] = u"\U0001D405"  # setting final dungeon at random point on map
+    mapv2[r.randint(0, len(mapv2) - 1)] = u"\u046A"  # Ѫ,  setting final dungeon at random point on map
 
     midPoint = (len(mapv2) - 1) // 2  # detemine midpoint of 1D array mapv2 using midpoint formula (x1 + x2) / 2 = mid
     # the formula is a little modified by just getting the length of the list
@@ -55,10 +56,10 @@ def gen_Map(size):
     for _ in range(1000):
         r.shuffle(mapv2)  # shuffles the world map a few times
 
-    while mapv2[midPoint] == u"\U0001D403" or mapv2[midPoint] == u"\U0001D405":  # Making sure middle is not a dungeon
+    while mapv2[midPoint] == u"\u046A" or mapv2[midPoint] == u"\u0468":  # Making sure middle is not a dungeon
         r.shuffle(mapv2)
 
-    mapv2[midPoint] = u"\U0001D5DB"  # Setting the center of the world map to H
+    mapv2[midPoint] = u"\u058D"  # Setting the center of the world map to H
 
     # constructing the non-flattened list, making the 1D list into 2D
     mapv3 = to_2d(mapv2, mapSize)
@@ -67,4 +68,5 @@ def gen_Map(size):
 
     return mapv3
 
-display_Map(gen_Map(3))
+
+display_Map(gen_Map(1))
