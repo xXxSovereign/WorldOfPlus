@@ -1,0 +1,6 @@
+This is a list of useful references
+
+UTF-8 CODES: use https://www.fileformat.info/index.htm to search for characters and use "python source code" section
+
+ex: https://www.fileformat.info/info/unicode/char/1d405/index.htm
+ex cont: print(u"\U0001D405") prints: 𝐅
