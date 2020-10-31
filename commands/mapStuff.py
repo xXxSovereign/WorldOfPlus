@@ -81,17 +81,7 @@ def gen_Map(size):
 
     # Making the entire map's center H
 
-    while True:
-        while mapv3[center[0]][center[1]] == u"\U0001D403":
-            mapv3 = Shuffle(mapv2)
-        mapv3[center[0]][center[1]] = "H"
-
-        for row in mapv3:
-            for item in row:
-                if False:
-                    pass
-
-    return [mapv1, mapv3]
+    return [mapv1, mapv2]
 
 
-display_Map(gen_Map(0)[1])
+display_Map(gen_Map(3)[1])
