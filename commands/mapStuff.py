@@ -69,4 +69,3 @@ def gen_Map(size):
     return mapv3
 
 
-display_Map(gen_Map(1))
