@@ -1,35 +1,5 @@
 import os
 import random as r
-import numpy as np
-
-# global variables used in functions, they must be up here to be accessable throught this program
-dungeon_count = 0
-switch = {
-    1: u"\U0001D403",  # UTF-8 Encoding for 𝐃
-    2: "F",
-    3: "M",
-    4: "T"
-}
-
-
-def Shuffle(map):
-    return ["placeholder", "value"]
-
-
-def area_Switch(case):
-    return switch[case]  # this function is used this way to get around a problem with scope and other problems
-
-
-def determine_Area():
-    global dungeon_count, switch
-
-    area = area_Switch(r.randint(1, 4))
-    if area == u"\U0001D403" and dungeon_count != 4:
-        dungeon_count += 1
-    elif area == u"\U0001D403" and dungeon_count == 4:
-        area = None
-        switch[1] = "F"
-    return area
 
 
 def display_Map(world_map):  # Function to display the world map, parameter is the current explored map
@@ -37,8 +7,13 @@ def display_Map(world_map):  # Function to display the world map, parameter is t
     for i in world_map:
         output = ""  # For loop to access and print individual items in the map list
         for j in i:
-            output += j + " "
+            output += j + "  "
         print(output)  # Outputs the map in a square
+
+
+def to_2d(world_map, n):
+    return [world_map[i:i+n] for i in range(0, len(world_map), n)]  # slices the list in n sizes, where n is the length
+# of the rows in the 2D map
 
 
 def gen_Map(size):
@@ -59,29 +34,37 @@ def gen_Map(size):
 
     mapv1 = [["+" for _ in range(mapSize)] for _ in range(mapSize)]
     # Creating the map as a list, _ means that no var is needed
-
-    mapv2 = mapv1.copy()
     mapv1[center[0]][center[1]] = "H"  # sets the center of mapv1 to H
 
-    # This loops through all the +'s in mapv1, and copies the position using enumerate, to the map the Area's onto mapv2
-    for index, i in enumerate(mapv1):  # Access each list in mapv1
-        for index2, j in enumerate(i):  # access each item in each list in mapv1
-            area = determine_Area()  # generate a radnom area
-            if area is None:
-                area = determine_Area()  # This whole block is used in conjunction with determine_Area() to block >4 D's
-            mapv2[index][index2] = area  # sets the index in mapv2 to the area
+    areas = ["F", "M", "T"]  # list of the area's, excluding dungeon and final dungeon
 
-    mapv2[center[0]][center[1]] = "H"
+    mapv2 = []  # initializing the list for the fully discovered map
 
-    mapv1 = [["+" for _ in range(mapSize)] for _ in range(mapSize)]
-    mapv1[center[0]][center[1]] = "H"
+    for row in mapv1:
+        for element in mapv1:  # accesing each item to get correct amount of areas
+            mapv2.append(r.choice(areas))  # making random areas
 
-    # Shuffling mapv2 to fix Dungeons only appearing near the top
-    mapv3 = Shuffle(mapv2)
+    for _ in range(4):
+        mapv2[r.randint(0, len(mapv2) - 1)] = u"\U0001D403"  # setting the 4 dungeons at random points on map
 
-    # Making the entire map's center H
+    mapv2[r.randint(0, len(mapv2) - 1)] = u"\U0001D405"  # setting final dungeon at random point on map
 
-    return [mapv1, mapv2]
+    midPoint = (len(mapv2) - 1) // 2  # detemine midpoint of 1D array mapv2 using midpoint formula (x1 + x2) / 2 = mid
+    # the formula is a little modified by just getting the length of the list
 
+    for _ in range(1000):
+        r.shuffle(mapv2)  # shuffles the world map a few times
 
-display_Map(gen_Map(3)[1])
+    while mapv2[midPoint] == u"\U0001D403" or mapv2[midPoint] == u"\U0001D405":  # Making sure middle is not a dungeon
+        r.shuffle(mapv2)
+
+    mapv2[midPoint] = u"\U0001D5DB"  # Setting the center of the world map to H
+
+    # constructing the non-flattened list, making the 1D list into 2D
+    mapv3 = to_2d(mapv2, mapSize)
+
+    del mapv2, areas, midPoint   # deleting unnecessary lists to free memory
+
+    return mapv3
+
+display_Map(gen_Map(3))
