@@ -17,6 +17,7 @@ def to_2d(world_map, n):
 # of the rows in the 2D map
 
 
+# noinspection PyUnboundLocalVariable
 def gen_Map(size):
     # Determine map size off of user input "size" and center of the map
 
@@ -41,8 +42,8 @@ def gen_Map(size):
 
     mapv2 = []  # initializing the list for the fully discovered map
 
-    for row in mapv1:
-        for element in mapv1:  # accesing each item to get correct amount of areas
+    for _ in mapv1:
+        for _ in mapv1:  # accesing each item to get correct amount of areas
             mapv2.append(r.choice(areas))  # making random areas
 
     for _ in range(4):
@@ -67,5 +68,3 @@ def gen_Map(size):
     del mapv2, areas, midPoint   # deleting unnecessary lists to free memory
 
     return mapv3
-
-
