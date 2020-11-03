@@ -5,14 +5,32 @@ root = Tk()
 
 root.geometry("500x500")
 
-myLabel = Label(root, text="bro this gui is slick")
-myLabel.grid(row=0, column=5)
+root.title("poggy woggy")
 
-myLabel2 = Label(root, text="nah this is s l i c k")
-myLabel2.grid(row=1, column=2)
+
+def button():
+    myLable = Label(root, text="not poggers :(")
+    myLable.pack()
+
+
+def cmd():
+    l = Label(root, text="pretty pog :)")
+    l.pack()
+
+
+myLabel = Label(root, text="its 4:10")
+myLabel.pack()
+
+myLabel2 = Label(root, text="broooo")
+myLabel2.pack()
 
 myLabel3 = Label(root, text="Poggers")
-myLabel3.grid(row=5, column=3)
+myLabel3.pack()
+
+butonp = Button(root, text="click me", command=button)
+butonp.pack()
+
+boton = Button(root, text="dont k;lcik me plox", command=cmd)
+boton.pack()
 
 root.mainloop()
-

@@ -68,3 +68,5 @@ def gen_Map(size):
     del mapv2, areas, midPoint   # deleting unnecessary lists to free memory
 
     return mapv3
+
+display_Map(gen_Map(1))
